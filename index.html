@@ -27,6 +27,7 @@
       <li><a href="services.html"class="nav-link">Services</a></li>
       <li><a href="plans.html"   class="nav-link">Plans</a></li>
       <li><a href="claims.html"  class="nav-link">Claims</a></li>
+  
       <li><a href="contact.html" class="nav-link">Contact</a></li>
       <li><a href="contact.html" class="nav-cta">Get a Quote</a></li>
     </ul>
@@ -491,6 +492,514 @@
   </div>
 </section>
 
+<!-- INSURANCE CALCULATOR -->
+<section class="section calculator" id="calculator">
+  <div class="container">
+    <div class="section-label" data-reveal>Tools</div>
+    <h2 class="section-title" data-reveal>Calculate Your <span class="em">Coverage Needs</span></h2>
+    <p class="section-sub" data-reveal>Get instant estimates for your insurance requirements with our smart calculator.</p>
+
+    <div class="calc-container" data-reveal>
+      <div class="calc-tabs">
+        <button class="calc-tab active" data-tab="life">Life Insurance</button>
+        <button class="calc-tab" data-tab="health">Health Insurance</button>
+        <button class="calc-tab" data-tab="car">Car Insurance</button>
+      </div>
+
+      <div class="calc-content">
+        <!-- LIFE INSURANCE CALCULATOR -->
+        <div class="calc-panel active" id="life">
+          <div class="calc-form">
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>Annual Income</label>
+                <input type="number" id="life-income" placeholder="Enter your annual income" value="1000000">
+              </div>
+              <div class="calc-field">
+                <label>Current Age</label>
+                <input type="number" id="life-age" placeholder="Your age" value="30">
+              </div>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>Retirement Age</label>
+                <input type="number" id="life-retire" placeholder="Retirement age" value="60">
+              </div>
+              <div class="calc-field">
+                <label>Existing Cover</label>
+                <input type="number" id="life-existing" placeholder="Current insurance cover" value="0">
+              </div>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>Outstanding Loans</label>
+                <input type="number" id="life-loans" placeholder="Home loan, personal loans" value="0">
+              </div>
+              <div class="calc-field">
+                <label>Children's Education</label>
+                <input type="number" id="life-education" placeholder="Education fund needed" value="0">
+              </div>
+            </div>
+            <button class="btn btn-primary calc-btn" onclick="calculateLife()">Calculate Coverage</button>
+          </div>
+          <div class="calc-result" id="life-result" style="display:none">
+            <div class="result-header">
+              <h4>Recommended Coverage</h4>
+              <div class="result-amount">₹<span id="life-coverage">0</span></div>
+            </div>
+            <div class="result-details">
+              <div class="detail-item">
+                <span>Income Replacement</span>
+                <span>₹<span id="life-income-replacement">0</span></span>
+              </div>
+              <div class="detail-item">
+                <span>Loan Coverage</span>
+                <span>₹<span id="life-loan-coverage">0</span></span>
+              </div>
+              <div class="detail-item">
+                <span>Education Fund</span>
+                <span>₹<span id="life-edu-coverage">0</span></span>
+              </div>
+            </div>
+            <a href="contact.html" class="btn btn-emerald">Get Quote for This Plan</a>
+          </div>
+        </div>
+
+        <!-- HEALTH INSURANCE CALCULATOR -->
+        <div class="calc-panel" id="health">
+          <div class="calc-form">
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>Family Members</label>
+                <select id="health-members">
+                  <option value="1">Individual</option>
+                  <option value="2">2 Members</option>
+                  <option value="3">3 Members</option>
+                  <option value="4">4+ Members</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label>Age of Eldest Member</label>
+                <input type="number" id="health-age" placeholder="Age" value="35">
+              </div>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>City Tier</label>
+                <select id="health-city">
+                  <option value="metro">Metro (Mumbai, Delhi, etc.)</option>
+                  <option value="tier1">Tier 1 City</option>
+                  <option value="tier2">Tier 2 City</option>
+                  <option value="tier3">Tier 3 City</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label>Pre-existing Conditions</label>
+                <select id="health-preexisting">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary calc-btn" onclick="calculateHealth()">Calculate Coverage</button>
+          </div>
+          <div class="calc-result" id="health-result" style="display:none">
+            <div class="result-header">
+              <h4>Recommended Coverage</h4>
+              <div class="result-amount">₹<span id="health-coverage">0</span></div>
+            </div>
+            <div class="result-details">
+              <div class="detail-item">
+                <span>Base Coverage</span>
+                <span>₹<span id="health-base">0</span></span>
+              </div>
+              <div class="detail-item">
+                <span>Family Floater</span>
+                <span>₹<span id="health-floater">0</span></span>
+              </div>
+              <div class="detail-item">
+                <span>City Loading</span>
+                <span>₹<span id="health-city-loading">0</span></span>
+              </div>
+            </div>
+            <a href="contact.html" class="btn btn-emerald">Get Quote for This Plan</a>
+          </div>
+        </div>
+
+        <!-- CAR INSURANCE CALCULATOR -->
+        <div class="calc-panel" id="car">
+          <div class="calc-form">
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>Car Value (IDV)</label>
+                <input type="number" id="car-value" placeholder="Insured Declared Value" value="800000">
+              </div>
+              <div class="calc-field">
+                <label>Car Age (Years)</label>
+                <input type="number" id="car-age" placeholder="Age of vehicle" value="3">
+              </div>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>Fuel Type</label>
+                <select id="car-fuel">
+                  <option value="petrol">Petrol</option>
+                  <option value="diesel">Diesel</option>
+                  <option value="cng">CNG</option>
+                  <option value="electric">Electric</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label>Coverage Type</label>
+                <select id="car-coverage">
+                  <option value="third">Third Party Only</option>
+                  <option value="comprehensive">Comprehensive</option>
+                  <option value="comprehensive-zero">Comprehensive + Zero Dep</option>
+                </select>
+              </div>
+            </div>
+            <div class="calc-row">
+              <div class="calc-field">
+                <label>NCB (No Claim Bonus)</label>
+                <select id="car-ncb">
+                  <option value="0">0%</option>
+                  <option value="20">20%</option>
+                  <option value="25">25%</option>
+                  <option value="35">35%</option>
+                  <option value="45">45%</option>
+                  <option value="50">50%</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label>Previous Claims</label>
+                <select id="car-claims">
+                  <option value="0">No Claims</option>
+                  <option value="1">1 Claim</option>
+                  <option value="2">2+ Claims</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary calc-btn" onclick="calculateCar()">Calculate Premium</button>
+          </div>
+          <div class="calc-result" id="car-result" style="display:none">
+            <div class="result-header">
+              <h4>Annual Premium</h4>
+              <div class="result-amount">₹<span id="car-premium">0</span></div>
+            </div>
+            <div class="result-details">
+              <div class="detail-item">
+                <span>Base Premium</span>
+                <span>₹<span id="car-base">0</span></span>
+              </div>
+              <div class="detail-item">
+                <span>Own Damage</span>
+                <span>₹<span id="car-od">0</span></span>
+              </div>
+              <div class="detail-item">
+                <span>Third Party</span>
+                <span>₹<span id="car-tp">0</span></span>
+              </div>
+            </div>
+            <a href="contact.html" class="btn btn-emerald">Buy This Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section faq" id="faq">
+  <div class="container">
+    <div class="section-label" data-reveal>Help Center</div>
+    <h2 class="section-title" data-reveal>Frequently Asked <span class="em">Questions</span></h2>
+    <p class="section-sub" data-reveal>Everything you need to know about our insurance products and services.</p>
+
+    <div class="faq-grid" data-reveal>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is the claim settlement ratio of Laxman Insurance?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Laxman Insurance maintains an impressive <strong>99% claim settlement ratio</strong>, one of the highest in the industry. This means we settle 99 out of every 100 claims we receive. Our transparent process and customer-first approach ensure genuine claims are processed quickly and fairly.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How long does it take to settle a claim?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Our average claim settlement time is just <strong>3 working days</strong>. For health insurance claims with cashless facilities, we can approve within 24-48 hours. Life insurance claims with complete documentation are settled within 3-5 days. We also offer expedited processing for emergency cases.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I port my existing insurance policy to Laxman?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! We offer seamless policy portability. You can transfer your existing life, health, car, or home insurance policy from any IRDAI-registered insurer to Laxman Insurance. You'll retain benefits like no-claim bonus and waiting period credits while getting better coverage and service.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What documents are required to file a claim?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Documents vary by policy type:</p>
+          <ul style="margin-top: 12px; padding-left: 20px;">
+            <li><strong>Life Insurance:</strong> Death certificate, policy document, claim form, ID proof</li>
+            <li><strong>Health Insurance:</strong> Medical reports, bills, discharge summary, claim form</li>
+            <li><strong>Car Insurance:</strong> FIR report, driving license, RC book, photos of damage</li>
+            <li><strong>Home Insurance:</strong> Incident report, valuation reports, repair estimates</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you offer cashless hospitalization?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, we provide cashless hospitalization at <strong>10,000+ network hospitals</strong> across India. Simply present your Laxman Health Card at any network hospital, and we'll settle bills directly with the hospital up to your policy limit. No upfront payment required for covered treatments.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is the process for renewing my policy?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Renewal is completely digital and takes just 3 minutes:</p>
+          <ol style="margin-top: 12px; padding-left: 20px;">
+            <li>Log into your account on our website or app</li>
+            <li>Go to 'My Policies' and select the policy to renew</li>
+            <li>Review coverage details and make any changes</li>
+            <li>Pay securely via any payment method</li>
+            <li>Receive instant policy confirmation</li>
+          </ol>
+          <p style="margin-top: 12px;">We send renewal reminders 30, 15, and 3 days before expiry.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I customize my insurance coverage?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Absolutely! All our policies are fully customizable. You can adjust coverage limits, add riders (like critical illness cover, accidental death benefit), choose deductibles, and select payment frequency. Our insurance advisors help you create a personalized plan that fits your exact needs and budget.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What payment options are available?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>We offer multiple payment options for your convenience:</p>
+          <ul style="margin-top: 12px; padding-left: 20px;">
+            <li>Credit/Debit Cards (Visa, Mastercard, RuPay)</li>
+            <li>Net Banking (all major banks)</li>
+            <li>UPI (Google Pay, PhonePe, Paytm)</li>
+            <li>EMI options on credit cards</li>
+            <li>Auto-debit mandate for renewals</li>
+            <li>Cheque/DD at our branches</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-cta" data-reveal>
+      <p>Still have questions? Our insurance experts are here to help.</p>
+      <a href="contact.html" class="btn btn-primary">Talk to an Expert</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG/RESOURCES SECTION -->
+<section class="section resources" id="resources">
+  <div class="container">
+    <div class="section-label" data-reveal>Learning Center</div>
+    <h2 class="section-title" data-reveal>Insurance <span class="em">Guides & Tips</span></h2>
+    <p class="section-sub" data-reveal>Expert insights to help you make informed insurance decisions.</p>
+
+    <div class="resources-grid" data-reveal>
+      <article class="resource-card">
+        <div class="resource-image">
+          <div class="resource-category">Life Insurance</div>
+        </div>
+        <div class="resource-content">
+          <h3><a href="#">Term Insurance vs. Whole Life: Which is Right for You?</a></h3>
+          <p>Understanding the key differences between term and whole life insurance to make the best choice for your family's financial security.</p>
+          <div class="resource-meta">
+            <span class="resource-author">By Rahul Sharma</span>
+            <span class="resource-date">5 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <div class="resource-image">
+          <div class="resource-category">Health Insurance</div>
+        </div>
+        <div class="resource-content">
+          <h3><a href="#">Top 10 Things to Check Before Buying Health Insurance</a></h3>
+          <p>A comprehensive checklist to evaluate health insurance policies and ensure you get the best coverage for your needs.</p>
+          <div class="resource-meta">
+            <span class="resource-author">By Priya Nair</span>
+            <span class="resource-date">8 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <div class="resource-image">
+          <div class="resource-category">Car Insurance</div>
+        </div>
+        <div class="resource-content">
+          <h3><a href="#">How to Reduce Your Car Insurance Premium Without Compromising Coverage</a></h3>
+          <p>Smart strategies to lower your car insurance costs while maintaining comprehensive protection for your vehicle.</p>
+          <div class="resource-meta">
+            <span class="resource-author">By Amit Verma</span>
+            <span class="resource-date">6 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <div class="resource-image">
+          <div class="resource-category">Investment</div>
+        </div>
+        <div class="resource-content">
+          <h3><a href="#">ULIPs vs. Mutual Funds: Where Should You Invest?</a></h3>
+          <p>A detailed comparison of Unit Linked Insurance Plans and mutual funds to help you choose the right investment vehicle.</p>
+          <div class="resource-meta">
+            <span class="resource-author">By Sneha Patel</span>
+            <span class="resource-date">10 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <div class="resource-image">
+          <div class="resource-category">Tax Planning</div>
+        </div>
+        <div class="resource-content">
+          <h3><a href="#">Maximize Tax Savings with Insurance: Section 80C & 10D Explained</a></h3>
+          <p>Complete guide to tax benefits available on insurance premiums and claims under Indian income tax laws.</p>
+          <div class="resource-meta">
+            <span class="resource-author">By Karthik R.</span>
+            <span class="resource-date">7 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <div class="resource-image">
+          <div class="resource-category">Claims</div>
+        </div>
+        <div class="resource-content">
+          <h3><a href="#">Claim Rejected? Here's What You Can Do Next</a></h3>
+          <p>Step-by-step guide to understanding claim rejection reasons and the appeal process to get your rightful settlement.</p>
+          <div class="resource-meta">
+            <span class="resource-author">By Anjali Desai</span>
+            <span class="resource-date">9 min read</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="resources-cta" data-reveal>
+      <a href="#" class="btn btn-outline">View All Articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS & RECOGNITION -->
+<section class="section awards" id="awards">
+  <div class="container">
+    <div class="section-label" data-reveal>Achievements</div>
+    <h2 class="section-title" data-reveal>Awards & <span class="em">Recognition</span></h2>
+    <p class="section-sub" data-reveal>Our commitment to excellence has been recognized by industry leaders and customers alike.</p>
+
+    <div class="awards-showcase" data-reveal>
+      <div class="award-item">
+        <div class="award-icon">🏆</div>
+        <h4>Best Insurance Company 2024</h4>
+        <p>Indian Insurance Awards</p>
+        <span class="award-year">2024</span>
+      </div>
+
+      <div class="award-item">
+        <div class="award-icon">⭐</div>
+        <h4>Customer Excellence Award</h4>
+        <p>Financial Services Forum</p>
+        <span class="award-year">2023</span>
+      </div>
+
+      <div class="award-item">
+        <div class="award-icon">🚀</div>
+        <h4>Digital Innovation Leader</h4>
+        <p>InsurTech Summit Asia</p>
+        <span class="award-year">2023</span>
+      </div>
+
+      <div class="award-item">
+        <div class="award-icon">💎</div>
+        <h4>Most Trusted Brand</h4>
+        <p>Consumer Choice Awards</p>
+        <span class="award-year">2022</span>
+      </div>
+
+      <div class="award-item">
+        <div class="award-icon">🌟</div>
+        <h4>Claims Service Excellence</h4>
+        <p>Insurance Regulatory Council</p>
+        <span class="award-year">2022</span>
+      </div>
+
+      <div class="award-item">
+        <div class="award-icon">🏅</div>
+        <h4>Fastest Growing Insurer</h4>
+        <p>Business Today Magazine</p>
+        <span class="award-year">2021</span>
+      </div>
+    </div>
+
+    <div class="certifications" data-reveal>
+      <h3>Certifications & Licenses</h3>
+      <div class="cert-grid">
+        <div class="cert-item">
+          <div class="cert-logo">IRDAI</div>
+          <p>IRDAI Certified<br/>License No: IRDA/REG/2008/456</p>
+        </div>
+        <div class="cert-item">
+          <div class="cert-logo">ISO</div>
+          <p>ISO 9001:2015<br/>Quality Management</p>
+        </div>
+        <div class="cert-item">
+          <div class="cert-logo">GDPR</div>
+          <p>Data Protection<br/>GDPR Compliant</p>
+        </div>
+        <div class="cert-item">
+          <div class="cert-logo">PCI</div>
+          <p>PCI DSS Certified<br/>Secure Payments</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-strip">
   <div class="cta-strip-orb"></div>
@@ -537,6 +1046,9 @@
         <li><a href="about.html">About Us</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="plans.html">Plans & Pricing</a></li>
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#resources">Resources</a></li>
         <li><a href="claims.html">File a Claim</a></li>
         <li><a href="contact.html">Contact Us</a></li>
       </ul>

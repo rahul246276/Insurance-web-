@@ -1,6 +1,6 @@
 /**
  * Laxman Insurance v3.0 — Premium JavaScript
- * Features: Navbar, Scroll Reveal, Counters, Slider, FAQ, Form, Parallax
+ * Features: Navbar, Scroll Reveal, Counters, Slider, FAQ, Form, Parallax, Calculator
  */
 
 'use strict';
@@ -55,57 +55,269 @@ function closeMenu() {
   document.body.style.overflow = '';
 }
 
-hamburger?.addEventListener('click', () =>
-  navLinks.classList.contains('open') ? closeMenu() : openMenu()
-);
+hamburger?.addEventListener('click', () => navLinks.classList.contains('open') ? closeMenu() : openMenu());
 overlay.addEventListener('click', closeMenu);
-qsa('#navLinks a').forEach(a => a.addEventListener('click', closeMenu));
+
+// Close menu on nav link click
+qsa('.nav-link').forEach(link => link.addEventListener('click', closeMenu));
+
+// Close menu on Escape key
 document.addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
 
-/* Active nav link for single-page */
+/* ── SMOOTH SCROLL & ACTIVE LINK ── */
 function updateActiveLink() {
   const sections = qsa('section[id]');
-  const pos = window.scrollY + 90;
-  sections.forEach(sec => {
-    const link = qs(`.nav-link[href="#${sec.id}"]`);
+  const scrollPos = window.scrollY + 100;
+
+  sections.forEach(section => {
+    const { id } = section;
+    const link = qs(`.nav-link[href="#${id}"]`);
     if (!link) return;
-    const active = pos >= sec.offsetTop && pos < sec.offsetTop + sec.offsetHeight;
-    link.classList.toggle('active', active);
+
+    const top = section.offsetTop;
+    const height = section.offsetHeight;
+
+    link.classList.toggle('active', scrollPos >= top && scrollPos < top + height);
   });
 }
 
-/* ── SMOOTH SCROLL (hash links) ── */
-document.addEventListener('click', e => {
-  const a = e.target.closest('a[href^="#"]');
-  if (!a) return;
-  const target = qs(a.getAttribute('href'));
-  if (!target) return;
-  e.preventDefault();
-  const top = target.getBoundingClientRect().top + window.scrollY - (navbar?.offsetHeight || 72);
-  window.scrollTo({ top, behavior: 'smooth' });
+qsa('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    e.preventDefault();
+    const target = qs(anchor.getAttribute('href'));
+    if (target) {
+      const offset = 80;
+      const targetPos = target.offsetTop - offset;
+      window.scrollTo({ top: targetPos, behavior: 'smooth' });
+      closeMenu();
+    }
+  });
 });
 
-/* ── SCROLL REVEAL ── */
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (!en.isIntersecting) return;
-    setTimeout(() => en.target.classList.add('revealed'), +(en.target.dataset.delay || 0));
-    revealObs.unobserve(en.target);
-  });
-}, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+/* ── SCROLL TO TOP ── */
+qs('#scrollTop')?.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
-function initReveal() {
-  qsa('[data-reveal],[data-reveal-fade],[data-reveal-left],[data-reveal-right]').forEach((el, i) => {
-    revealObs.observe(el);
-  });
+/* ── COUNTER ANIMATION ── */
+function animateCounter(el) {
+  const target = +el.dataset.count;
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
 
-  /* Stagger children in grids */
-  qsa('.services-grid,.why-grid,.plans-grid,.tl-grid,.doc-grid,.values-grid,.team-grid,.svc-page-grid,.services-page-grid,.claim-steps-grid').forEach(grid => {
-    qsa('[data-reveal]', grid).forEach((child, idx) => {
-      child.style.transitionDelay = `${idx * 0.07}s`;
-    });
-  });
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = Math.floor(current).toLocaleString('en-IN');
+  }, 16);
 }
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+      animateCounter(entry.target);
+      entry.target.classList.add('counted');
+    }
+  });
+}, { threshold: 0.5 });
+
+qsa('[data-count]').forEach(el => counterObserver.observe(el));
+
+/* ── SCROLL REVEAL ── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+qsa('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+/* ── TESTIMONIAL SLIDER ── */
+const sliderTrack = qs('#sliderTrack');
+const slPrev = qs('#slPrev');
+const slNext = qs('#slNext');
+const slDots = qs('#slDots');
+let currentSlide = 0;
+
+function updateSlider() {
+  const slideWidth = qs('.testi-card').offsetWidth;
+  sliderTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+  
+  qsa('.sl-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+}
+
+function nextSlide() {
+  const totalSlides = qsa('.testi-card').length;
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+}
+
+function prevSlide() {
+  const totalSlides = qsa('.testi-card').length;
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  updateSlider();
+}
+
+slNext?.addEventListener('click', nextSlide);
+slPrev?.addEventListener('click', prevSlide);
+
+// Auto-play slider
+setInterval(nextSlide, 5000);
+
+/* ── CALCULATOR FUNCTIONALITY ── */
+// Tab switching
+qsa('.calc-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const targetTab = tab.dataset.tab;
+    
+    // Update active tab
+    qsa('.calc-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    
+    // Update active panel
+    qsa('.calc-panel').forEach(panel => panel.classList.remove('active'));
+    qs(`#${targetTab}`).classList.add('active');
+  });
+});
+
+// Life Insurance Calculator
+function calculateLife() {
+  const income = +qs('#life-income').value || 0;
+  const age = +qs('#life-age').value || 30;
+  const retireAge = +qs('#life-retire').value || 60;
+  const existing = +qs('#life-existing').value || 0;
+  const loans = +qs('#life-loans').value || 0;
+  const education = +qs('#life-education').value || 0;
+  
+  const workingYears = Math.max(0, retireAge - age);
+  const incomeReplacement = income * workingYears * 0.7; // 70% of income
+  const totalCoverage = incomeReplacement + loans + education - existing;
+  
+  // Display results
+  qs('#life-coverage').textContent = Math.max(0, totalCoverage).toLocaleString('en-IN');
+  qs('#life-income-replacement').textContent = incomeReplacement.toLocaleString('en-IN');
+  qs('#life-loan-coverage').textContent = loans.toLocaleString('en-IN');
+  qs('#life-edu-coverage').textContent = education.toLocaleString('en-IN');
+  
+  qs('#life-result').style.display = 'block';
+}
+
+// Health Insurance Calculator
+function calculateHealth() {
+  const members = +qs('#health-members').value || 1;
+  const age = +qs('#health-age').value || 35;
+  const city = qs('#health-city').value;
+  const preExisting = qs('#health-preexisting').value === 'yes';
+  
+  let baseCoverage = 500000; // Base 5L
+  if (age > 40) baseCoverage *= 1.5;
+  if (age > 50) baseCoverage *= 1.3;
+  
+  // Family floater calculation
+  const floaterMultiplier = members === 1 ? 1 : members === 2 ? 1.8 : members === 3 ? 2.5 : 3.2;
+  const floaterCoverage = baseCoverage * floaterMultiplier;
+  
+  // City loading
+  const cityLoading = city === 'metro' ? 0.3 : city === 'tier1' ? 0.2 : city === 'tier2' ? 0.1 : 0;
+  const cityAmount = floaterCoverage * cityLoading;
+  
+  const totalCoverage = Math.round(floaterCoverage + cityAmount);
+  
+  // Display results
+  qs('#health-coverage').textContent = totalCoverage.toLocaleString('en-IN');
+  qs('#health-base').textContent = Math.round(baseCoverage).toLocaleString('en-IN');
+  qs('#health-floater').textContent = Math.round(floaterCoverage - baseCoverage).toLocaleString('en-IN');
+  qs('#health-city-loading').textContent = Math.round(cityAmount).toLocaleString('en-IN');
+  
+  qs('#health-result').style.display = 'block';
+}
+
+// Car Insurance Calculator
+function calculateCar() {
+  const carValue = +qs('#car-value').value || 800000;
+  const carAge = +qs('#car-age').value || 3;
+  const fuel = qs('#car-fuel').value;
+  const coverage = qs('#car-coverage').value;
+  const ncb = +qs('#car-ncb').value || 0;
+  const claims = +qs('#car-claims').value || 0;
+  
+  // Base premium calculation
+  let ownDamage = carValue * 0.03; // 3% of car value
+  if (carAge > 5) ownDamage *= 0.8;
+  if (carAge > 10) ownDamage *= 0.6;
+  
+  // Fuel type loading
+  if (fuel === 'diesel') ownDamage *= 1.15;
+  if (fuel === 'cng') ownDamage *= 1.1;
+  
+  // Coverage type
+  if (coverage === 'comprehensive-zero') ownDamage *= 1.3;
+  else if (coverage === 'third') ownDamage = 0;
+  
+  // Third party premium (fixed rates)
+  const thirdParty = carValue > 1500000 ? 7800 : carValue > 1000000 ? 5400 : 3200;
+  
+  // Apply NCB
+  const ncbDiscount = ownDamage * (ncb / 100);
+  ownDamage -= ncbDiscount;
+  
+  // Claim loading
+  if (claims === 1) ownDamage *= 1.2;
+  if (claims === 2) ownDamage *= 1.5;
+  
+  const totalPremium = Math.round(ownDamage + thirdParty);
+  
+  // Display results
+  qs('#car-premium').textContent = totalPremium.toLocaleString('en-IN');
+  qs('#car-base').textContent = Math.round(ownDamage + ncbDiscount).toLocaleString('en-IN');
+  qs('#car-od').textContent = Math.round(ownDamage).toLocaleString('en-IN');
+  qs('#car-tp').textContent = thirdParty.toLocaleString('en-IN');
+  
+  qs('#car-result').style.display = 'block';
+}
+
+/* ── FAQ FUNCTIONALITY ── */
+qsa('.faq-question').forEach(button => {
+  button.addEventListener('click', () => {
+    const faqItem = button.closest('.faq-item');
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all FAQ items
+    qsa('.faq-item').forEach(item => item.classList.remove('active'));
+    
+    // Open clicked item if it wasn't active
+    if (!isActive) {
+      faqItem.classList.add('active');
+    }
+  });
+});
+
+/* ── FORM HANDLING ── */
+const forms = qsa('form');
+forms.forEach(form => {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    // Add your form submission logic here
+    console.log('Form submitted:', new FormData(form));
+  });
+});
+
+/* ── INITIALIZATION ── */
+document.addEventListener('DOMContentLoaded', () => {
+  updateActiveLink();
+  handleScroll();
+});
+
+// Make calculator functions globally accessible
+window.calculateLife = calculateLife;
+window.calculateHealth = calculateHealth;
+window.calculateCar = calculateCar;
 
 /* ── ANIMATED COUNTERS ── */
 function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
