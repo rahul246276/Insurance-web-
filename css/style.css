@@ -1160,6 +1160,143 @@ select.form-control{cursor:pointer}
   font-size:.85rem;color:var(--text-dim);line-height:1.5;
 }
 
+/* ── FLOATING CALL & WHATSAPP BUTTONS ── */
+.floating-buttons{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  z-index:1000;
+}
+
+.floating-btn{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transition:all var(--t-mid);
+  position:relative;
+  overflow:hidden;
+}
+
+.floating-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+
+.call-btn{
+  background:var(--emerald);
+}
+
+.call-btn:hover{
+  background:#10b981;
+}
+
+.whatsapp-btn{
+  background:#25d366;
+}
+
+.whatsapp-btn:hover{
+  background:#128c7e;
+}
+
+/* Floating button animations */
+.floating-btn::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:0;
+  height:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.2);
+  transform:translate(-50%,-50%);
+  transition:width .6s, height .6s;
+}
+
+.floating-btn:hover::before{
+  width:100%;
+  height:100%;
+}
+
+/* Responsive floating buttons */
+@media (max-width:768px){
+  .floating-buttons{
+    bottom:15px;
+    right:15px;
+    gap:10px;
+  }
+  
+  .floating-btn{
+    width:50px;
+    height:50px;
+  }
+}
+
+@media (max-width:480px){
+  .floating-buttons{
+    bottom:10px;
+    right:10px;
+    gap:8px;
+  }
+  
+  .floating-btn{
+    width:45px;
+    height:45px;
+  }
+  
+  .floating-btn svg{
+    width:18px;
+    height:18px;
+  }
+}
+
+/* ── FOOTER DEVELOPER SECTION ── */
+.footer-developer{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.1);
+  text-align:center;
+}
+
+.footer-developer p{
+  font-size:.85rem;
+  color:rgba(255,255,255,.6);
+  margin:0;
+}
+
+.developer-link{
+  color:var(--emerald-lt);
+  text-decoration:none;
+  font-weight:500;
+  transition:all var(--t-fast);
+}
+
+.developer-link:hover{
+  color:var(--emerald);
+  text-decoration:underline;
+}
+
+/* Responsive footer developer */
+@media (max-width:768px){
+  .footer-developer{
+    margin-top:12px;
+    padding-top:12px;
+  }
+  
+  .footer-developer p{
+    font-size:.8rem;
+    line-height:1.5;
+  }
+}
+
 /* ── ABOUT PAGE IMAGE FIXES ── */
 .about-image{
   width:100%;
