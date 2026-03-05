@@ -136,7 +136,11 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-qsa('[data-reveal]').forEach(el => revealObserver.observe(el));
+function initReveal() {
+  qsa('[data-reveal]').forEach(el => revealObserver.observe(el));
+  qsa('[data-reveal-left]').forEach(el => revealObserver.observe(el));
+  qsa('[data-reveal-right]').forEach(el => revealObserver.observe(el));
+}
 
 /* ── IMPROVED TESTIMONIAL SLIDER ── */
 const testimonialsTrack = qs('#testimonialsTrack');
