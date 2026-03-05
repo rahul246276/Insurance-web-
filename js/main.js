@@ -138,37 +138,77 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 qsa('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-/* ── TESTIMONIAL SLIDER ── */
-const sliderTrack = qs('#sliderTrack');
-const slPrev = qs('#slPrev');
-const slNext = qs('#slNext');
-const slDots = qs('#slDots');
-let currentSlide = 0;
+/* ── IMPROVED TESTIMONIAL SLIDER ── */
+const testimonialsTrack = qs('#testimonialsTrack');
+const testimonialPrev = qs('#testimonialPrev');
+const testimonialNext = qs('#testimonialNext');
+const testimonialDots = qs('#testimonialDots');
+let currentTestimonialSlide = 0;
 
-function updateSlider() {
-  const slideWidth = qs('.testi-card').offsetWidth;
-  sliderTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+function updateTestimonialSlider() {
+  const totalSlides = qsa('.testimonials-slide').length;
+  testimonialsTrack.style.transform = `translateX(-${currentTestimonialSlide * 100}%)`;
   
-  qsa('.sl-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+  // Update dots
+  qsa('.testimonial-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentTestimonialSlide);
+  });
 }
 
-function nextSlide() {
-  const totalSlides = qsa('.testi-card').length;
-  currentSlide = (currentSlide + 1) % totalSlides;
-  updateSlider();
+function nextTestimonialSlide() {
+  const totalSlides = qsa('.testimonials-slide').length;
+  currentTestimonialSlide = (currentTestimonialSlide + 1) % totalSlides;
+  updateTestimonialSlider();
 }
 
-function prevSlide() {
-  const totalSlides = qsa('.testi-card').length;
-  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-  updateSlider();
+function prevTestimonialSlide() {
+  const totalSlides = qsa('.testimonials-slide').length;
+  currentTestimonialSlide = (currentTestimonialSlide - 1 + totalSlides) % totalSlides;
+  updateTestimonialSlider();
 }
 
-slNext?.addEventListener('click', nextSlide);
-slPrev?.addEventListener('click', prevSlide);
+function goToTestimonialSlide(index) {
+  currentTestimonialSlide = index;
+  updateTestimonialSlider();
+}
+
+// Event listeners
+testimonialNext?.addEventListener('click', nextTestimonialSlide);
+testimonialPrev?.addEventListener('click', prevTestimonialSlide);
+
+// Dot navigation
+qsa('.testimonial-dot').forEach((dot, index) => {
+  dot.addEventListener('click', () => goToTestimonialSlide(index));
+});
 
 // Auto-play slider
-setInterval(nextSlide, 5000);
+setInterval(nextTestimonialSlide, 6000);
+
+// Touch/swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+testimonialsTrack?.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+testimonialsTrack?.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  const diff = touchStartX - touchEndX;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      nextTestimonialSlide(); // Swipe left - next slide
+    } else {
+      prevTestimonialSlide(); // Swipe right - previous slide
+    }
+  }
+}
 
 /* ── CALCULATOR FUNCTIONALITY ── */
 // Tab switching
