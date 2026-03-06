@@ -1258,6 +1258,529 @@ select.form-control{cursor:pointer}
   }
 }
 
+/* ── FOUNDER SECTION ── */
+.founder-section{
+  background:linear-gradient(135deg,var(--gray-light),var(--white));
+  padding:80px 0;
+}
+
+.founder-container{
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:60px;
+  align-items:start;
+}
+
+.founder-left{
+  text-align:center;
+  position:sticky;
+  top:120px;
+}
+
+.founder-avatar{
+  margin-bottom:32px;
+}
+
+.founder-image{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:4rem;
+  font-weight:700;
+  color:var(--white);
+  margin:0 auto;
+  box-shadow:0 20px 40px rgba(29,78,216,.2);
+  border:6px solid var(--white);
+}
+
+.founder-info{
+  padding:0 20px;
+}
+
+.founder-name{
+  font-size:2rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:8px;
+  line-height:1.2;
+}
+
+.founder-title{
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--primary);
+  margin-bottom:4px;
+}
+
+.founder-company{
+  font-size:1rem;
+  color:var(--text-dim);
+  font-weight:500;
+}
+
+.founder-right{
+  background:var(--white);
+  border-radius:var(--r-xl);
+  padding:48px;
+  box-shadow:0 10px 40px rgba(0,0,0,.08);
+}
+
+.founder-content{
+  max-width:800px;
+}
+
+.founder-intro{
+  font-size:1.1rem;
+  line-height:1.8;
+  color:var(--text-dim);
+  margin-bottom:40px;
+  font-weight:400;
+}
+
+.founder-vision,
+.founder-expertise,
+.founder-services,
+.founder-connect{
+  margin-bottom:40px;
+}
+
+.founder-vision h3,
+.founder-expertise h3,
+.founder-services h3,
+.founder-connect h3{
+  font-size:1.4rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:16px;
+  position:relative;
+  padding-left:20px;
+}
+
+.founder-vision h3::before,
+.founder-expertise h3::before,
+.founder-services h3::before,
+.founder-connect h3::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:4px;
+  height:24px;
+  background:var(--primary);
+  border-radius:2px;
+}
+
+.founder-vision p,
+.founder-expertise p,
+.founder-connect p{
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--text-dim);
+  margin-bottom:16px;
+}
+
+.services-list{
+  list-style:none;
+  padding:0;
+  margin:20px 0;
+}
+
+.services-list li{
+  padding:12px 0 12px 32px;
+  position:relative;
+  font-size:1rem;
+  color:var(--text-dim);
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+
+.services-list li:last-child{
+  border-bottom:none;
+}
+
+.services-list li::before{
+  content:'✓';
+  position:absolute;
+  left:0;
+  top:12px;
+  color:var(--primary);
+  font-weight:700;
+  font-size:1.1rem;
+}
+
+.founder-mission{
+  font-size:1.1rem !important;
+  color:var(--ink) !important;
+  font-weight:600 !important;
+  margin:24px 0 !important;
+  line-height:1.6 !important;
+}
+
+.founder-cta{
+  margin-top:32px;
+  padding-top:24px;
+  border-top:2px solid rgba(0,0,0,.05);
+}
+
+/* Responsive founder section */
+@media (max-width:1024px){
+  .founder-container{
+    grid-template-columns:1fr;
+    gap:48px;
+  }
+  
+  .founder-left{
+    position:relative;
+    top:0;
+  }
+  
+  .founder-image{
+    width:180px;
+    height:180px;
+    font-size:3.5rem;
+  }
+  
+  .founder-right{
+    padding:40px;
+  }
+}
+
+@media (max-width:768px){
+  .founder-section{
+    padding:60px 0;
+  }
+  
+  .founder-image{
+    width:160px;
+    height:160px;
+    font-size:3rem;
+  }
+  
+  .founder-name{
+    font-size:1.8rem;
+  }
+  
+  .founder-right{
+    padding:32px 24px;
+  }
+  
+  .founder-intro{
+    font-size:1rem;
+  }
+  
+  .founder-vision h3,
+  .founder-expertise h3,
+  .founder-services h3,
+  .founder-connect h3{
+    font-size:1.3rem;
+  }
+}
+
+@media (max-width:480px){
+  .founder-section{
+    padding:40px 0;
+  }
+  
+  .founder-image{
+    width:140px;
+    height:140px;
+    font-size:2.5rem;
+  }
+  
+  .founder-name{
+    font-size:1.6rem;
+  }
+  
+  .founder-right{
+    padding:24px 20px;
+  }
+  
+  .founder-intro{
+    font-size:.95rem;
+  }
+  
+  .services-list li{
+    font-size:.9rem;
+    padding:10px 0 10px 28px;
+  }
+  
+  .founder-mission{
+    font-size:1rem !important;
+  }
+}
+
+/* ── SERVICES PAGE CARDS WITH IMAGES ── */
+.svc-page-image{
+  position:relative;
+  width:100%;
+  height:200px;
+  overflow:hidden;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+}
+
+.svc-page-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform var(--t-mid);
+}
+
+.svc-page-card:hover .svc-page-img{
+  transform:scale(1.05);
+}
+
+.svc-page-content{
+  padding:32px;
+  text-align:left;
+}
+
+.svc-page-icon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+  margin-bottom:20px;
+  background:var(--c-bg);
+  color:var(--c-col);
+}
+
+.svc-page-card h3{
+  margin-bottom:16px;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--ink);
+}
+
+.svc-page-card p{
+  margin-bottom:20px;
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--text-dim);
+}
+
+.svc-page-card ul{
+  margin-bottom:24px;
+  padding-left:0;
+  list-style:none;
+}
+
+.svc-page-card li{
+  padding:8px 0;
+  font-size:.9rem;
+  color:var(--text-dim);
+  position:relative;
+  padding-left:24px;
+}
+
+.svc-page-card li::before{
+  content:'✓';
+  position:absolute;
+  left:0;
+  color:var(--c-col);
+  font-weight:600;
+}
+
+.svc-page-cta{
+  display:inline-flex;
+  align-items:center;
+  color:var(--c-col);
+  text-decoration:none;
+  font-weight:600;
+  font-size:1rem;
+  padding:12px 24px;
+  border:2px solid var(--c-col);
+  border-radius:30px;
+  transition:all var(--t-fast);
+  background:transparent;
+}
+
+.svc-page-cta:hover{
+  background:var(--c-grad);
+  color:var(--white);
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+}
+
+/* Responsive service page cards */
+@media (max-width:768px){
+  .svc-page-image{
+    height:160px;
+  }
+  
+  .svc-page-content{
+    padding:24px;
+  }
+  
+  .svc-page-icon{
+    width:40px;
+    height:40px;
+    font-size:1.2rem;
+    margin-bottom:16px;
+  }
+  
+  .svc-page-card h3{
+    font-size:1.3rem;
+  }
+  
+  .svc-page-card p{
+    font-size:.9rem;
+  }
+  
+  .svc-page-card li{
+    font-size:.85rem;
+  }
+}
+
+@media (max-width:480px){
+  .svc-page-image{
+    height:140px;
+  }
+  
+  .svc-page-content{
+    padding:20px;
+  }
+  
+  .svc-page-icon{
+    width:36px;
+    height:36px;
+    font-size:1.1rem;
+  }
+  
+  .svc-page-card h3{
+    font-size:1.2rem;
+  }
+  
+  .svc-page-card p{
+    font-size:.85rem;
+  }
+  
+  .svc-page-card li{
+    font-size:.8rem;
+    padding:6px 0 6px 20px;
+  }
+  
+  .svc-page-cta{
+    padding:10px 20px;
+    font-size:.9rem;
+  }
+}
+
+/* ── SERVICES CARDS WITH IMAGES ── */
+.svc-image{
+  position:relative;
+  width:100%;
+  height:180px;
+  overflow:hidden;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  margin-bottom:16px;
+}
+
+.service-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform var(--t-mid);
+}
+
+.svc-card:hover .service-img{
+  transform:scale(1.05);
+}
+
+.svc-content{
+  padding:0 24px 24px;
+  text-align:center;
+}
+
+.svc-icon{
+  margin-bottom:12px;
+}
+
+.svc-card h3{
+  margin-bottom:12px;
+  font-size:1.25rem;
+  font-weight:600;
+  color:var(--ink);
+}
+
+.svc-card p{
+  margin-bottom:16px;
+  font-size:.9rem;
+  line-height:1.6;
+  color:var(--text-dim);
+}
+
+.svc-link{
+  display:inline-flex;
+  align-items:center;
+  color:var(--emerald);
+  text-decoration:none;
+  font-weight:500;
+  font-size:.9rem;
+  transition:all var(--t-fast);
+}
+
+.svc-link:hover{
+  color:var(--emerald-lt);
+  transform:translateX(4px);
+}
+
+.svc-hot{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:var(--emerald);
+  color:var(--white);
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:.75rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  z-index:2;
+}
+
+/* Responsive service cards */
+@media (max-width:768px){
+  .svc-image{
+    height:140px;
+  }
+  
+  .svc-content{
+    padding:0 20px 20px;
+  }
+  
+  .svc-card h3{
+    font-size:1.1rem;
+  }
+  
+  .svc-card p{
+    font-size:.85rem;
+  }
+}
+
+@media (max-width:480px){
+  .svc-image{
+    height:120px;
+  }
+  
+  .svc-content{
+    padding:0 16px 16px;
+  }
+  
+  .svc-hot{
+    top:8px;
+    right:8px;
+    padding:3px 8px;
+    font-size:.65rem;
+  }
+}
+
 /* ── FOOTER DEVELOPER SECTION ── */
 .footer-developer{
   margin-top:16px;
